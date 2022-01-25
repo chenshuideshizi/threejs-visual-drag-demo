@@ -1,0 +1,60 @@
+<template>
+    <div ref="threeContainer" class="three-container"></div>
+</template>
+
+<script>
+import ThreeEngine from '../utils/three-engine-class'
+import { createFloorPolygon, default as Floor } from '../utils/floor'
+import { createBox } from '../shared/extra'
+
+export default {
+    name: 'MapContainer',
+    data() {
+        return {
+            threeEngine: null,
+            floors: [],
+            drawingFloorPoints: [],
+        }
+    },
+    mounted() {
+        this.initThreeEngine()
+    },
+    methods: {
+        initThreeEngine() {
+            this.threeEngine = new ThreeEngine({
+                el: this.$refs.threeContainer,
+                canvasWidth: 1000,
+                canvasHeight: 600,
+            })
+
+            const box1 = createBox(1, 1, 1)
+            box1.position.set(0, 0.5, 0)
+            this.threeEngine.scene.add(box1)
+        },
+        handleDrawingFloor() {
+            this.threeEngine.status = 2
+            let polygon = null
+            this.threeEngine.bus.$on('click', ({ selected }) => {
+                const { x, y, z } = selected.point
+                this.drawingFloorPoints.push([x, y, z])
+
+                this.threeEngine.scene.remove(polygon) // 清除老的形状
+                polygon = createFloorPolygon(this.drawingFloorPoints)
+                this.threeEngine.scene.add(polygon) // 绘制新的形状
+            })
+        },
+        handleCreateFloor() {
+            this.threeEngine.status = 1
+            const floor = new Floor({ points: this.drawingFloorPoints, height: 100 })
+
+            this.threeEngine.objects.push(floor.mesh)
+            this.threeEngine.scene.add(floor.mesh)
+            this.floors.push(this.drawingFloorPoints)
+            this.drawingFloorPoints = []
+        },
+    },
+}
+</script>
+
+<style scoped>
+</style>
