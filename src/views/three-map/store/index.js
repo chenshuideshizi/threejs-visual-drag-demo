@@ -1,6 +1,28 @@
 const state = {
-    mapData: {
-        data: [],
+    list: {
+        objectList: [
+            { // 正方体
+                type: 'BoxGeometry',
+                width: 1,
+                height: 2,
+                depth: 1,
+                children: [],
+            },
+            { // 柱体
+                type: 'CylinderGeometry',
+                radiusTop: 5,
+                radiusBottom: 5,
+                height: 20,
+                radialSegments: 32,
+                children: [],
+            },
+            { // 楼体
+                type: 'IrregularGeometry',
+                points: [[-1, 1], [1, 1], [1, -1], [-1, -1]],
+                height: 5,
+                children: [],
+            },
+        ],
     },
 }
 

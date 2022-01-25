@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-import EventBus from '../shared/EventBus'
+import EventBus from './EventBus'
 
 class ThreeEngine {
     constructor(options = {}) {
@@ -157,7 +157,7 @@ class ThreeEngine {
         window.addEventListener('resize', onWindowResize)
 
         function onClick(event) {
-            const { selected, camera } = this
+            const { selected } = this
 
             if (this.status === 2 && selected) {
                 const { x, y, z } = selected.point
@@ -170,6 +170,7 @@ class ThreeEngine {
         }
 
         function onMousedown(event) {
+            console.log('event', event)
             this.isMousedown = true
         }
 
@@ -178,7 +179,7 @@ class ThreeEngine {
         }
 
         function onMouseover(event) {
-
+            console.log('event', event)
         }
 
         function onMousemove(event) {
@@ -231,14 +232,11 @@ class ThreeEngine {
             }
         }
         function onMouseout(event) {
-
+            console.log('event', event)
         }
 
         function onWindowResize() {
-            camera.aspect = this.options.canvasWidth / this.options.canvasHeight
-            camera.updateProjectionMatrix()
 
-            renderer.setSize(canvasWidth, canvasHeight)
         }
     }
 

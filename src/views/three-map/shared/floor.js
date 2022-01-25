@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { Earcut } from 'three/src/extras/Earcut.js'
-import { createBox, createLine } from '../shared/extra'
+import { createBox, createLine } from './extra'
 
 class Floor {
     constructor({ points, height }) {

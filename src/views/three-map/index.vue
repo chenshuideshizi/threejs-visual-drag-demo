@@ -14,6 +14,7 @@
                     @mousedown="onMouseDown"
                     @mouseup="onMouseup"
                 >
+                    <MapContainer />
                 </div>
             </section>
 
@@ -29,12 +30,14 @@
 <script>
 import ControlBar from './components/ControlBar.vue'
 import ComponentList from './components/ComponentList.vue'
+import MapContainer from './components/MapContainer.vue'
 
 export default {
     name: 'ThreeMap',
     components: {
         ControlBar,
         ComponentList,
+        MapContainer,
     },
     data() {
         return {

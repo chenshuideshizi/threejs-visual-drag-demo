@@ -1,11 +1,12 @@
 <template>
-    <div ref="threeContainer" class="three-container"></div>
+    <div ref="threeContainer" class="three-container">{{ mapData }}</div>
 </template>
 
 <script>
-import ThreeEngine from '../utils/three-engine-class'
-import { createFloorPolygon, default as Floor } from '../utils/floor'
+import ThreeEngine from '../shared/three-engine-class'
+import Floor, { createFloorPolygon } from '../shared/floor'
 import { createBox } from '../shared/extra'
+import { mapState } from 'vuex'
 
 export default {
     name: 'MapContainer',
@@ -15,6 +16,11 @@ export default {
             floors: [],
             drawingFloorPoints: [],
         }
+    },
+    computed: {
+        ...mapState({
+            mapData: state => state.threeMap.mapData,
+        }),
     },
     mounted() {
         this.initThreeEngine()
