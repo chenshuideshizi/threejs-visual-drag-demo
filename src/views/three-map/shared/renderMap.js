@@ -45,25 +45,29 @@ export default function mapRender(objectDataList) {
 }
 
 function createIrregularGeometry(points, height) {
+    debugger
     let topPoints = []
     for (let i = 0; i < points.length; i++) {
         let vertice = points[i]
         topPoints.push([vertice[0], vertice[1] + height, vertice[2]])
     }
-    let totalPoints = points.concat(topPoints)
-    let vertices = [] // 所有的顶点
-    for (let i = 0; i < totalPoints.length; i++) {
-        vertices.push(new THREE.Vector3(totalPoints[i][0], totalPoints[i][1], totalPoints[i][2]))
-    }
+
     let length = points.length
-    let faces = []
+    const faceVertices = []
     for (let j = 0; j < length; j++) { // 侧面生成三角形
+        let next
         if (j != length - 1) {
-            faces.push(new THREE.Face3(j, j + 1, length + j + 1))
-            faces.push(new THREE.Face3(length + j + 1, length + j, j))
+            // faceVertices.push(j, j + 1, length + j + 1)
+            // faceVertices.push(length + j + 1, length + j, j)
+            next = j + 1
+            faceVertices.push(topPoints[j], topPoints[next], points[j])
+            faceVertices.push(points[j], points[next], topPoints[next])
         } else {
-            faces.push(new THREE.Face3(j, 0, length))
-            faces.push(new THREE.Face3(length, length + j, j))
+            // faceVertices.push(j, 0, length)
+            // faceVertices.push(length, length + j, j)
+            next = 0
+            faceVertices.push(topPoints[j], topPoints[next], points[j])
+            faceVertices.push(points[j], points[next], topPoints[next])
         }
     }
     let data = []
@@ -72,17 +76,17 @@ function createIrregularGeometry(points, height) {
     }
     let triangles = Earcut.triangulate(data)
     if (triangles && triangles.length != 0) {
+        console.log('triangles', triangles)
         for (let i = 0; i < triangles.length; i++) {
             let tlength = triangles.length
             if (i % 3 == 0 && i < tlength - 2) {
-                faces.push(new THREE.Face3(triangles[i], triangles[i + 1], triangles[i + 2])) // 底部的三角面
-                faces.push(new THREE.Face3(triangles[i] + length, triangles[i + 1] + length, triangles[i + 2] + length)) // 顶部的三角面
+                faceVertices.push(triangles[i], triangles[i + 1], triangles[i + 2]) // 底部的三角面
+                faceVertices.push(triangles[i] + length, triangles[i + 1] + length, triangles[i + 2] + length) // 顶部的三角面
             }
         }
     }
-    let geometry = new THREE.Geometry()
-    geometry.vertices = vertices
-    geometry.faces = faces
-    geometry.computeFaceNormals() // 自动计算法向量
+    const geometry = new THREE.BufferGeometry()
+    const faceVerticesFloatArray = new Float32Array(faceVertices.flat())
+    geometry.setAttribute('position', new THREE.BufferAttribute(faceVerticesFloatArray, 3))
     return geometry
 }

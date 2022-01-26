@@ -25,10 +25,10 @@ const state = {
             { // 楼体
                 type: 'IrregularGeometry',
                 attrs: {
-                    points: [[-1, 1], [1, 1], [1, -1], [-1, -1]],
+                    points: [[-1, 0, 1], [1, 0, 1], [1, 0, -1], [-1, 0, -1]],
                     height: 5,
                 },
-                position: [10, 10, -10],
+                position: [0, 0, -0],
                 children: [],
             },
         ],
