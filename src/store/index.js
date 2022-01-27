@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import contantModules from './contantModules'
 import dynamicModules from './dynamicModules'
 
-console.log(dynamicModules)
+console.log('dynamicModules', dynamicModules)
 
 Vue.use(Vuex)
 
