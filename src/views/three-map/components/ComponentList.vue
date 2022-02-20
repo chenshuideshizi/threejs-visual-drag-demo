@@ -11,7 +11,7 @@
                     :key="`${index}_${childIndex}`"
                     class="item"
                     draggable
-                    :data-index="`${index}_${childIndex}`"
+                    :data-geo-type="`${childItem.type}`"
                 >
                     <span v-if="childItem.icon" class="iconfont" :class="'icon-' + childItem.icon"></span>
                     <span>{{ childItem.label }}</span>
@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         handleDragStart(e) {
-            e.dataTransfer.setData('index', e.target.dataset.index)
+            e.dataTransfer.setData('geo-type', e.target.dataset.geoType)
         },
     },
 }

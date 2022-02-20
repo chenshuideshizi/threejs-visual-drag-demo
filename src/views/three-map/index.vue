@@ -46,16 +46,13 @@ export default {
     },
     methods: {
         onDrop(e) {
+            debugger
             console.log('onDrop')
             e.preventDefault()
             e.stopPropagation()
-            const type = e.dataTransfer.getData('type')
+            const geoType = e.dataTransfer.getData('geo-type')
 
-            switch (type) {
-                case 'geometry':
-                    this.$store.dispatch('threeMap/add', 'geometry')
-                    break
-            }
+            this.$store.dispatch('threeMap/addGeo', geoType)
             // TODO:在这里身scene 中添加物体
             // const index = e.dataTransfer.getData('index')
             // const rectInfo = this.editor.getBoundingClientRect()

@@ -1,3 +1,5 @@
+import geoConfig from '../config/geoConfig'
+
 const state = {
     mapData: {
         objectList: [
@@ -28,13 +30,21 @@ const state = {
                     points: [
                         [-3, 0, 1],
                         [-2, 0, 1],
-                        [-1, 0, 1],
-                        [1, 0, 1], 
-                        [2, 0, 1],
-                        [3, 0, 1], 
 
-                        [3, 0, -1], 
-                        [2, 0, -1], 
+                        [-2, 0, 2],
+                        [-1, 0, 2],
+
+                        [-1, 0, 1],
+                        [1, 0, 1],
+
+                        [1, 0, 2],
+                        [2, 0, 2],
+
+                        [2, 0, 1],
+                        [3, 0, 1],
+
+                        [3, 0, -1],
+                        [2, 0, -1],
                         [1, 0, -1],
                         [-1, 0, -1],
                         [-2, 0, -1],
@@ -53,6 +63,9 @@ const mutations = {
     SET_MAP_DATA(state, data) {
         state.mapData = data
     },
+    ADD_GEOMETRY(state, geoType) {
+        state.mapData.objectList.push(geoConfig[geoType])
+    },
 }
 
 const actions = {
@@ -60,8 +73,8 @@ const actions = {
     async setMapData({ commit, data }) {
         commit('SET_MAP_DATA', data)
     },
-    add() {
-
+    addGeo({ commit, geoType }) {
+        commit('SET_MAP_DATA', geoType)
     },
 }
 
@@ -70,6 +83,7 @@ const getters = {
 }
 
 export default {
+    namespaced: true,
     state,
     mutations,
     actions,

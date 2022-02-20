@@ -18,17 +18,25 @@ const list = [
         name: '几何体',
         children: [
             {
-                component: 'v-text',
                 label: '正方体',
                 icon: '',
+                type: 'BoxGeometry',
                 attrs: {
 
                 },
             },
             {
-                component: 'v-button',
-                label: '圆球',
+                label: '柱体',
                 icon: '',
+                type: 'CylinderGeometry',
+                style: {
+
+                },
+            },
+            {
+                label: '不规则',
+                icon: '',
+                type: 'IrregularGeometry',
                 style: {
 
                 },
